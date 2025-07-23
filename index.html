@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entendendo "Looking Forward" - Para Brasileiros</title>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos Globais e Tema Netflix */
+        :root {
+            --netflix-red: #E50914;
+            --netflix-dark: #141414;
+            --netflix-light-dark: #222222;
+            --text-color: #E5E5E5;
+            --accent-gray: #A0A0A0;
+            --border-radius: 8px;
+            --padding-base: 1.5rem;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--netflix-dark);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, var(--netflix-dark) 0%, var(--netflix-light-dark) 100%);
+        }
+
+        /* Cabeçalho */
+        .header {
+            background-color: var(--netflix-dark);
+            padding: 1.5rem var(--padding-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid var(--netflix-red);
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--netflix-red);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            margin: 0;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title i {
+            font-size: 0.8em;
+            color: var(--text-color);
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            flex-grow: 1;
+            max-width: 900px;
+            margin: 2rem auto;
+            background-color: var(--netflix-light-dark);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            padding: var(--padding-base) 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--netflix-red);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Acordeão (Dropdown List) */
+        .accordion-item {
+            background-color: var(--netflix-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem var(--padding-base);
+            background-color: var(--netflix-light-dark);
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: #333333;
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 var(--padding-base);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            background-color: var(--netflix-dark);
+        }
+
+        .accordion-content.active {
+            max-height: 500px; /* Ajuste conforme necessário para o conteúdo */
+            padding: var(--padding-base) var(--padding-base);
+        }
+
+        .accordion-content p {
+            margin-bottom: 1em;
+        }
+
+        .accordion-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .accordion-content li {
+            margin-bottom: 0.5em;
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        .accordion-content li::before {
+            content: '•';
+            color: var(--netflix-red);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Botões de Áudio (mantidos para consistência, mas não usados para "Looking Forward") */
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #2a2a2a;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            justify-content: center;
+        }
+
+        .audio-button {
+            background-color: var(--netflix-red);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .audio-button:hover {
+            background-color: #CC0812;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .audio-button i {
+            font-size: 1.2em;
+        }
+
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            padding: 1.5rem var(--padding-base);
+            background-color: var(--netflix-dark);
+            color: var(--accent-gray);
+            font-size: 0.9rem;
+            margin-top: auto;
+            border-top: 2px solid var(--netflix-red);
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 1.8rem;
+                text-align: center;
+                display: block;
+            }
+            .header-title i {
+                display: block;
+                margin-bottom: 5px;
+            }
+            .main-content {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .section-text {
+                font-size: 1rem;
+            }
+            .accordion-header {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .accordion-content {
+                padding: 0.8rem 1rem;
+            }
+            .audio-player {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .audio-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Language buttons for introduction */
+        .intro-language-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-lang-button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background-color: #444;
+            color: var(--text-color);
+        }
+
+        .intro-lang-button.active {
+            background-color: var(--netflix-red);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+        }
+
+        .intro-lang-button:hover:not(.active) {
+            background-color: #555;
+            transform: translateY(-1px);
+        }
+
+        .intro-text-content {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .intro-text-content.hidden {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Styling for (Português/English) format */
+        .lang-pair {
+            display: block; /* Ensures each pair is on a new line */
+            margin-bottom: 0.5em; /* Space between pairs */
+            font-size: 0.95em; /* Slightly smaller font for examples */
+        }
+        .lang-pair strong {
+            color: var(--netflix-red); /* Highlight the expression */
+        }
+        .lang-pair em {
+            font-style: normal; /* Remove italic from original <em> */
+            color: var(--accent-gray); /* Distinguish translation */
+        }
+
+        /* Call to Action Box */
+        .call-to-action-box {
+            background-color: var(--netflix-red);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .call-to-action-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .call-to-action-box p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .call-to-action-button {
+            background-color: white;
+            color: var(--netflix-red);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .call-to-action-button:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title"><i class="fas fa-arrow-right"></i> Looking Forward: Um Guia para Brasileiros (A Guide for Brazilians)</h1>
+    </header>
+
+    <main class="main-content">
+        <section id="introduction">
+            <h2 class="section-title">A Importância de "Looking Forward" (The Importance of "Looking Forward")</h2>
+
+            <div class="intro-language-buttons">
+                <button id="intro-lang-pt-btn" class="intro-lang-button active">Português</button>
+                <button id="intro-lang-en-btn" class="intro-lang-button">English</button>
+            </div>
+
+            <div id="intro-pt" class="intro-text-content">
+                <p class="section-text">A expressão "looking forward" é uma das mais versáteis e positivas no inglês profissional e social. (The expression "looking forward" is one of the most versatile and positive in professional and social English.) Ela transmite entusiasmo, expectativa e um tom proativo, sendo essencial para construir relacionamentos e manter uma comunicação eficaz. (It conveys enthusiasm, anticipation, and a proactive tone, being essential for building relationships and maintaining effective communication.)</p>
+                <p class="section-text">Ao contrário de simplesmente dizer "I hope" (eu espero), "looking forward" expressa um desejo ativo e uma expectativa positiva em relação a um evento futuro, uma colaboração ou uma resposta. (Unlike simply saying "I hope", "looking forward" expresses an active desire and positive expectation regarding a future event, collaboration, or response.) Usá-la demonstra profissionalismo, engajamento e um bom domínio da etiqueta de comunicação em inglês. (Using it demonstrates professionalism, engagement, and a good grasp of English communication etiquette.)</p>
+                <p class="section-text">É uma forma educada e calorosa de encerrar e-mails, conversas ou apresentações, deixando uma impressão positiva e de abertura para futuras interações. (It's a polite and warm way to end emails, conversations, or presentations, leaving a positive and open impression for future interactions.)</p>
+            </div>
+
+            <div id="intro-en" class="intro-text-content hidden">
+                <p class="section-text">The expression "looking forward" is one of the most versatile and positive in professional and social English. It conveys enthusiasm, anticipation, and a proactive tone, being essential for building relationships and maintaining effective communication.</p>
+                <p class="section-text">Unlike simply saying "I hope", "looking forward" expresses an active desire and positive expectation regarding a future event, collaboration, or response. Using it demonstrates professionalism, engagement, and a good grasp of English communication etiquette.</p>
+                <p class="section-text">It's a polite and warm way to end emails, conversations, or presentations, leaving a positive and open impression for future interactions.</p>
+            </div>
+        </section>
+
+        <section id="what-it-means">
+            <h2 class="section-title">O que Significa "Looking Forward"? (What Does "Looking Forward" Mean?)</h2>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Significado Principal (Main Meaning) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>A expressão "looking forward" significa **"ansioso por"**, **"aguardando com expectativa"** ou **"esperando com prazer"**. (The expression "looking forward" means **"eagerly anticipating"**, **"awaiting with expectation"** or **"looking forward to with pleasure"**.) Ela é usada para expressar um sentimento positivo em relação a algo que vai acontecer no futuro. (It is used to express a positive feeling about something that is going to happen in the future.)</p>
+                    <p>É uma forma de demonstrar entusiasmo e que você está engajado com o que está por vir. (It's a way to show enthusiasm and that you are engaged with what's to come.)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="wait-vs-looking-forward">
+            <h2 class="section-title">"Wait" vs. "Looking Forward"</h2>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    A Diferença Crucial (The Crucial Difference) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Embora ambas as palavras envolvam o tempo, "wait" e "looking forward" têm conotações muito diferentes: (While both words involve time, "wait" and "looking forward" have very different connotations:)</p>
+                    <ul>
+                        <li>
+                            <span class="lang-pair">**"Wait" (Esperar):** Refere-se a uma pausa ou a um período de inatividade até que algo aconteça ou alguém chegue. Pode ser neutro ou até implicar impaciência. Ex: "I will **wait** for you at the lobby." (Eu vou te esperar no lobby.) <br> <em>(**"Wait" (To wait):** Refers to a pause or a period of inactivity until something happens or someone arrives. It can be neutral or even imply impatience. Ex: "I will **wait** for you at the lobby.")</em></span>
+                        </li>
+                        <li>
+                            <span class="lang-pair">**"Looking forward" (Aguardando com expectativa):** Expressa um sentimento positivo em relação ao futuro. É sobre a antecipação de algo agradável ou importante. Ex: "I'm **looking forward** to our meeting." (Estou ansioso pela nossa reunião.) <br> <em>(**"Looking forward" (Anticipating with expectation):** Expresses a positive feeling about the future. It's about the anticipation of something pleasant or important. Ex: "I'm **looking forward** to our meeting.")</em></span>
+                        </li>
+                    </ul>
+                    <p>Em contextos profissionais, usar "looking forward" demonstra proatividade e entusiasmo, enquanto "wait" pode soar passivo ou até impaciente. (In professional contexts, using "looking forward" demonstrates proactivity and enthusiasm, while "wait" can sound passive or even impatient.)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="work-contexts">
+            <h2 class="section-title">Contextos de Trabalho (Work Contexts)</h2>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    1. Reuniões e Eventos (Meetings and Events) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Expressando entusiasmo por futuras interações ou eventos. (Expressing enthusiasm for future interactions or events.)</p>
+                    <ul>
+                        <li><span class="lang-pair">"I'm **looking forward** to our meeting next week." <br> <em>(Estou ansioso pela nossa reunião na próxima semana.)</em></span></li>
+                        <li><span class="lang-pair">"We are **looking forward** to the conference." <br> <em>(Estamos aguardando a conferência com expectativa.)</em></span></li>
+                        <li><span class="lang-pair">"I'm **looking forward** to seeing you at the workshop." <br> <em>(Estou ansioso para te ver no workshop.)</em></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    2. Respostas e Confirmações (Responses and Confirmations) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Ao aguardar uma resposta, feedback ou confirmação. (When awaiting a response, feedback, or confirmation.)</p>
+                    <ul>
+                        <li><span class="lang-pair">"I'm **looking forward** to your reply." <br> <em>(Estou aguardando sua resposta.)</em></span></li>
+                        <li><span class="lang-pair">"**Looking forward** to hearing from you soon." <br> <em>(Ansioso para ter notícias suas em breve.)</em></span></li>
+                        <li><span class="lang-pair">"We are **looking forward** to your confirmation." <br> <em>(Estamos aguardando sua confirmação com expectativa.)</em></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    3. Colaborações e Projetos (Collaborations and Projects) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Demonstrando entusiasmo por trabalhar em conjunto ou iniciar um novo projeto. (Showing enthusiasm for working together or starting a new project.)</p>
+                    <ul>
+                        <li><span class="lang-pair">"I'm **looking forward** to collaborating on this project." <br> <em>(Estou ansioso para colaborar neste projeto.)</em></span></li>
+                        <li><span class="lang-pair">"We're **looking forward** to starting the new phase." <br> <em>(Estamos aguardando com expectativa o início da nova fase.)</em></span></li>
+                        <li><span class="lang-pair">"**Looking forward** to working with your team." <br> <em>(Ansioso para trabalhar com sua equipe.)</em></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    4. Progressos e Resultados (Progress and Results) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Expressando expectativa por ver o progresso ou os resultados de algo. (Expressing anticipation for seeing progress or results of something.)</p>
+                    <ul>
+                        <li><span class="lang-pair">"I'm **looking forward** to seeing the final results." <br> <em>(Estou ansioso para ver os resultados finais.)</em></span></li>
+                        <li><span class="lang-pair">"**Looking forward** to the next update." <br> <em>(Ansioso pela próxima atualização.)</em></span></li>
+                        <li><span class="lang-pair">"We are **looking forward** to the successful completion of this task." <br> <em>(Estamos aguardando com expectativa a conclusão bem-sucedida desta tarefa.)</em></span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="variations">
+            <h2 class="section-title">Variações e Respostas Comuns (Variations and Common Responses)</h2>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Variações (Variations) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <ul>
+                        <li><span class="lang-pair">"I'm **looking forward to**..." (Estou ansioso por...)</span></li>
+                        <li><span class="lang-pair">"We are **looking forward to**..." (Estamos ansiosos por...)</span></li>
+                        <li><span class="lang-pair">"**Looking forward to** it!" (Ansioso por isso!) - Mais informal. (More informal.)</span></li>
+                        <li><span class="lang-pair">"I'm really **looking forward to**..." (Estou realmente ansioso por...) - Enfatiza o entusiasmo. (Emphasizes enthusiasm.)</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Como Responder (How to Respond) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Quando alguém usa "looking forward", você pode responder de forma igualmente positiva: (When someone uses "looking forward", you can respond in an equally positive way:)</p>
+                    <ul>
+                        <li><span class="lang-pair">"Me too!" (Eu também!)</span></li>
+                        <li><span class="lang-pair">"Sounds great, I'm looking forward to it as well." (Parece ótimo, também estou ansioso por isso.)</span></li>
+                        <li><span class="lang-pair">"I'll be there!" (Estarei lá!) - Se for um evento. (If it's an event.)</span></li>
+                        <li><span class="lang-pair">"Great, I'll be in touch." (Ótimo, entrarei em contato.) - Se for uma resposta. (If it's a response.)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2 class="section-title">Conclusão (Conclusion)</h2>
+            <p class="section-text">Dominar a expressão "looking forward" é crucial para uma comunicação profissional e positiva em inglês. (Mastering the expression "looking forward" is crucial for positive and professional communication in English.) Ela adiciona um toque de entusiasmo e proatividade às suas interações, deixando uma impressão duradoura. (It adds a touch of enthusiasm and proactivity to your interactions, leaving a lasting impression.)</p>
+            <p class="section-text">Incorpore-a em seus e-mails e conversas para soar mais natural e engajado. (Incorporate it into your emails and conversations to sound more natural and engaged.) Continue praticando e aprimorando seu inglês para se destacar no ambiente global! (Keep practicing and improving your English to stand out in the global environment!)</p>
+        </section>
+
+        <section id="call-to-action">
+            <div class="call-to-action-box">
+                <h3>Eleve Sua Comunicação: Comece a Usar "Looking Forward"! (Elevate Your Communication: Start Using "Looking Forward"!)</h3>
+                <p>Aproveite a oportunidade de soar mais profissional e entusiasmado. Comece a usar "looking forward" hoje mesmo! (Seize the opportunity to sound more professional and enthusiastic. Start using "looking forward" today!)</p>
+                <button class="call-to-action-button" onclick="alert('Excelente! Sua comunicação em inglês está evoluindo!');">
+                    Começar a Usar Agora! (Start Using Now!)
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Daby © 2025 ✨🚀</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lógica para os acordeões (dropdowns)
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling; // Pega o conteúdo do acordeão
+                    const icon = header.querySelector('i'); // Pega o ícone
+
+                    // Fecha outros acordeões abertos (opcional, mas bom para UX)
+                    accordionHeaders.forEach(otherHeader => {
+                        if (otherHeader !== header && otherHeader.classList.contains('active')) {
+                            otherHeader.classList.remove('active');
+                            otherHeader.nextElementSibling.classList.remove('active');
+                            otherHeader.querySelector('i').style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    // Alterna a classe 'active' no cabeçalho e no conteúdo
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+
+                    // Gira o ícone de chevron
+                    if (header.classList.contains('active')) {
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            // Lógica para os botões de áudio usando SpeechSynthesisUtterance
+            const audioButtons = document.querySelectorAll('.audio-button');
+            const synth = window.speechSynthesis;
+
+            audioButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const wordToSpeak = button.dataset.audioWord;
+                    if (wordToSpeak && synth) {
+                        const utterance = new SpeechSynthesisUtterance(wordToSpeak);
+                        utterance.lang = 'en-US'; // Define o idioma para inglês americano para pronúncia correta
+                        synth.speak(utterance);
+                    } else {
+                        console.error('Web Speech API not supported or word not defined.');
+                    }
+                });
+            });
+
+            // Lógica para alternar a introdução entre português e inglês
+            const introLangPtBtn = document.getElementById('intro-lang-pt-btn');
+            const introLangEnBtn = document.getElementById('intro-lang-en-btn');
+            const introPtContent = document.getElementById('intro-pt');
+            const introEnContent = document.getElementById('intro-en');
+
+            function showIntroLanguage(lang) {
+                if (lang === 'pt') {
+                    introPtContent.classList.remove('hidden');
+                    introEnContent.classList.add('hidden');
+                    introLangPtBtn.classList.add('active');
+                    introLangEnBtn.classList.remove('active');
+                } else if (lang === 'en') {
+                    introPtContent.classList.add('hidden');
+                    introEnContent.classList.remove('hidden');
+                    introLangPtBtn.classList.remove('active');
+                    introLangEnBtn.classList.add('active');
+                }
+            }
+
+            introLangPtBtn.addEventListener('click', () => showIntroLanguage('pt'));
+            introLangEnBtn.addEventListener('click', () => showIntroLanguage('en'));
+        });
+    </script>
+</body>
+</html>
